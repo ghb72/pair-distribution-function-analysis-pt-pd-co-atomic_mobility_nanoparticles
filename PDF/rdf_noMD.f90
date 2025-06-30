@@ -1,7 +1,7 @@
 program rdf
 implicit none
 integer, parameter :: nhis=2600
-integer :: i,j,npart,ngr,ig,m,b1,b2,b3,b4
+integer :: i,j,npart,ig,m,b1,b2,b3,b4
 integer, dimension(:), allocatable :: b
 real :: bij,bm,box,dx,dy,dz,delr,r,rmin,rmax,rmed,hint
 real, dimension(:), allocatable :: x,y,z

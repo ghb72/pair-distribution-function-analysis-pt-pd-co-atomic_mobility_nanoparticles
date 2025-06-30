@@ -105,6 +105,40 @@ def run_pdf_noMD(name: str, path: str, nhis: int, dr: float, smooth1: float, smo
     # os.remove('temp_rdf.f90')
     # os.remove('rdf.exe')
 
+def run_density(name: str, path: str, nhis: int, dr: float) -> None:
+    """
+    Modifica el archivo density.f90, compila y ejecuta el archivo modificado.
+
+    Parámetros:
+    name (str): Nombre del archivo xyz que se va a procesar.
+    path (str): Ruta donde se encuentra el archivo xyz.
+    nhis (int): Número de histogramas a utilizar.
+    dr (float): Incremento de distancia radial.
+
+    Retorno:
+    Ninguno. La función imprime la salida de los comandos de compilación y ejecución.
+    """
+    new_filename = path + '\\' + name
+    print(os.getcwd())
+    with open('..\\..\\PDF\\density.f90', 'r') as f:
+        lines = f.readlines()
+    with open('temp_density.f90', 'w') as f:
+        for line in lines:
+            if "file='shell.xyz'" in line:
+                line = line.replace("file='shell.xyz'", f"file='{new_filename}'")
+            if "nhis=2600" in line:
+                line = line.replace("nhis=2600", f"nhis={nhis}")
+            if "file='density.txt'" in line:
+                line = line.replace("file='density.txt'", f"file='{name[:-4] + '_density.txt'}'")
+            if "delr = 0.02" in line:
+                line = line.replace("delr = 0.02", f"delr = {dr}")
+            f.write(line)
+    resultado = subprocess.run(['gfortran', 'temp_density.f90', '-o', 'density'], capture_output=True)
+    print(resultado.stdout.decode())
+    resultado2 = subprocess.run(['./density.exe'], capture_output=True)
+    print(resultado2.stdout.decode())
+    # os.remove('temp_density.f90')
+
 def proccess_all_files_in_folder(folder:str) -> None:
     """
     Procesa todos los archivos en una carpeta especificada utilizando la función `run_pdf`.
