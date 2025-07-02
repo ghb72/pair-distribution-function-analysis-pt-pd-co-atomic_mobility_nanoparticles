@@ -1,4 +1,4 @@
-program density
+program calcular_rdf
 implicit none
 integer, parameter :: nhis=720
 integer(8) :: i, j, m
@@ -11,8 +11,7 @@ real(8), dimension(:), allocatable :: x,y,z
 real(8), dimension(nhis) :: hist,hs1,hs2,base,rho_r
 ! character(32) :: a
 character(2) :: ele
-real, parameter :: r_cut = 720.0*sqrt(3.0) ! Distancia de corte en Angstroms
-real, parameter :: r_cut_sq = r_cut**2
+real, parameter :: r_cut_sq
 
 
 open(unit=10,file='shell.xyz')
@@ -46,6 +45,7 @@ close(10)
 
 delr = 0.1
 box = nhis*delr
+r_cut_sq = (box / 2.0)**2
 hist(:) = 0.0
 
 m = int(npart,8) * int(npart-1,8) / 2
@@ -64,19 +64,18 @@ do i = 1, npart-1
       dy = y(i) - y(j)
       dz = z(i) - z(j)
       r_sq = dx**2 + dy**2 + dz**2
+      if (r_sq > r_cut_sq) cycle ! Si la distancia es mayor que el corte, saltamos
 
       hx = dx - box * nint(dx / box)
       hy = dy - box * nint(dy / box)
       hz = dz - box * nint(dz / box)
       r = sqrt(hx**2 + hy**2 + hz**2)
-      
-      if (r < box) then
-         ig = int(r/delr) + 1
-         if (ig > 0 .and. ig <= nhis) then
-            hist(ig) = hist(ig) + 2.0 * b(i) * b(j)
-            rmed = rmed + r
-            if (r < rmin) rmin = r
-            if (r > rmax) rmax = r
+      ig = int(r/delr) + 1
+      if (ig > 0 .and. ig <= nhis) then
+         hist(ig) = hist(ig) + 2.0 * b(i) * b(j)
+         rmed = rmed + r
+         if (r < rmin) rmin = r
+         if (r > rmax) rmax = r
          endif
       endif
    end do
@@ -131,7 +130,7 @@ close(11)
 contains
 
 subroutine smooth(h,ns,f)
-implicit none
+    implicit none
 integer, parameter :: nhis=720
 integer :: i,j,ns,k
 real(8) :: x, count
@@ -145,14 +144,14 @@ do i = 1,nhis
       if (j>=1 .and. j<=nhis) then
          x = x + h(j)
          count = count + 1.0
-      endif
-   end do
-   if (count > 0) then
+            endif
+        end do
+        if (count > 0) then
       f(i) = x / count
    else
       f(i) = 0.0
-   endif
-end do
+        endif
+    end do
 
 end subroutine
 
