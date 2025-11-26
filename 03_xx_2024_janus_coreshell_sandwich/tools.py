@@ -224,8 +224,12 @@ def mover_archivo(carpeta_origen, carpeta_destino, archivo_buscado):
     shutil.move(origen, destino)
 
 def modify_md9(t_relax):
+    # Use relative path from script location
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    lammps_template = os.path.join(script_dir, 'lammps', 'md9-temp.in')
+    
     # Abre el archivo en modo de lectura
-    with open('lammps/md9-temp.in', 'r') as file:
+    with open(lammps_template, 'r') as file:
         # Lee todas las líneas del archivo
         lines = file.readlines()
 
@@ -247,13 +251,16 @@ def modify_md9(t_relax):
 
 
     # Abre el archivo en modo de escritura
-    with open('lammps/md9-temp.in', 'w') as file:
+    with open(lammps_template, 'w') as file:
         # Escribe todas las líneas de nuevo en el archivo
         file.writelines(lines)
 
 def modify_dump(dump_number):
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    lammps_template = os.path.join(script_dir, 'lammps', 'md9-temp.in')
+    
     # Abre el archivo en modo de lectura
-    with open('lammps/md9-temp.in', 'r') as file:
+    with open(lammps_template, 'r') as file:
         # Lee todas las líneas del archivo
         lines = file.readlines()
 
@@ -267,13 +274,16 @@ def modify_dump(dump_number):
             lines[i] = line.replace('dump-1.xyz', 'dump'+ str(dump_number) + '-1.xyz')
 
     # Abre el archivo en modo de escritura
-    with open('lammps/md9-temp.in', 'w') as file:
+    with open(lammps_template, 'w') as file:
         # Escribe todas las líneas de nuevo en el archivo
         file.writelines(lines)
 
 def modify_str_coords(nf):
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    lammps_template = os.path.join(script_dir, 'lammps', 'md9-temp.in')
+    
     # Abre el archivo en modo de lectura
-    with open('lammps/md9-temp.in', 'r') as file:
+    with open(lammps_template, 'r') as file:
         # Lee todas las líneas del archivo
         lines = file.readlines()
 
@@ -284,7 +294,7 @@ def modify_str_coords(nf):
             lines[i] = line.replace('coords.ini', 'coords' + str(nf) + '.ini')
 
     # Abre el archivo en modo de escritura
-    with open('lammps/md9-temp.in', 'w') as file:
+    with open(lammps_template, 'w') as file:
         # Escribe todas las líneas de nuevo en el archivo
         file.writelines(lines)
 

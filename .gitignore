@@ -1,5 +1,39 @@
-.vscode
-myfunctions/core_shell_f.py
+﻿# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.ipynb_checkpoints/
 
-# Giant files
-03_01_2025_sandwich_coreshell_janus\lammps\probe.xyz
+# Data files (large)
+*.xyz
+!**/examples/*.xyz
+*.ini
+!**/examples/*.ini
+
+# LAMMPS outputs
+log.lammps
+dump*.xyz
+*.lammps
+
+# Fortran compiled
+*.exe
+*.o
+*.mod
+rdf
+rdf.exe
+
+# Results
+results/graphics_*/*.png
+results/graphics_*/*.jpg
+results/shells_*/*.xyz
+
+# OS
+.DS_Store
+Thumbs.db

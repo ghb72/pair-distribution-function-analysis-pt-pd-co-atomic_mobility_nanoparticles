@@ -1,6 +1,13 @@
 import pandas as pd
-from myfuncions.tools_f import leer_xyz
 import numpy as np
+import os
+import sys
+
+# Add paths for imports
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(project_root, 'src', 'my_functions'))
+
+from tools_f import leer_xyz
 
 class diffractin_powers:
     def __init__(self,element,Z_number) -> None:

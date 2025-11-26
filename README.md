@@ -8,6 +8,35 @@ Welcome to the repository for my thesis project, focused on the structural and a
 
 This repository contains simulation data, analysis scripts, and documentation generated throughout the research process. The organization of files reflects the experimental workflow and iterative nature of scientific investigation.
 
+## Setup and Installation
+
+### Creating the Environment
+
+#### Using Conda (Recommended)
+```bash
+conda env create -f environment.yml
+conda activate thesis-nanoparticles
+```
+
+#### Using pip + venv
+```bash
+python -m venv venv
+# On Windows:
+venv\Scripts\activate
+# On Linux/Mac:
+source venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+### Compiling Fortran (Optional but Recommended)
+
+For high-performance RDF calculations:
+```bash
+cd src/fortran
+gfortran -o rdf rdf.f90
+```
+
 ## Directory Structure (Reorganized)
 
 The project has been reorganized into a modular structure to improve maintainability and clarity:
@@ -48,16 +77,21 @@ The project has been reorganized into a modular structure to improve maintainabi
 
 ### Legacy Directories (Preserved for Reference)
 
-The following directories contain simulation data organized chronologically by research phase:
-- **`02_xx_xxxx_*/`**: Early crystal structure simulations (FCC, BCC, HCP)
-- **`03_xx_xxxx_*/`**: Core-shell, Janus, sandwich structure development
-- **`04_xx_xxxx_*/`**: Pt-Pd-Co ternary nanoparticle studies
-- **`05_xx_xxxx_*/`**: Parameter variation experiments (temperature, vacuum)
-- **`06_xx_xxxx_*/`**: Crystal density approximations
-- **`before_work_*/`**: Early exploratory work
-- **`examples/`**: Reference examples for reproducibility
-- **`paper/`**: Notes and corrections for thesis publication
-- **`PDF/`**: Legacy PDF calculation scripts (now in `src/fortran/`)
+Each legacy directory contains its own README.md explaining its purpose and contents:
+
+- **`02_xx_crystal_structures/`**: Early crystal structure simulations (FCC, BCC, HCP, ICO)
+- **`03_15_2024_Pt_Ni_rand_dist/`**: Random and radial distribution experiments for Pt-Ni systems
+- **`03_xx_2024_janus_coreshell_sandwich/`**: Core-shell, Janus, and sandwich structure development
+- **`04_12_2024_random_dist_2/`**: Second iteration of random distribution methodologies
+- **`04_19_2024_radial_distributions/`**: Systematic radial distribution models (M0-M8)
+- **`04_26_2024_comparision_variables/`**: Parameter sensitivity and χ² statistical analysis
+- **`05_17_2024_probes_w_last_model/`**: Final model validation with multiple probes
+- **`05_31_2024_probes_w_temp_vac/`**: Temperature and vacuum condition effects
+- **`06_23_2024_crystal_density_aprox/`**: Theoretical ρ(r) vs G(r) comparison for perfect crystals
+- **`before_work_2/`** & **`before_work_3/`**: Early exploratory work (legacy)
+- **`examples/`**: Reference examples and templates
+- **`paper/`**: Publication notes and corrections
+- **`PDF/`**: Legacy Python PDF calculators (superseded by Fortran in `src/fortran/`)
 
 ## Important Notes
 

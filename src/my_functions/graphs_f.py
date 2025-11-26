@@ -2,7 +2,14 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 import numpy as np
 from sys import argv
-from myfuncions.tools_f import leer_xyz
+import os
+import sys
+
+# Add parent directory to path to import tools_f
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, current_dir)
+
+from tools_f import leer_xyz
 
 def atomos_por_radio(atpos:list, elemento_interes:str):
     radios = defaultdict(int)
